@@ -4,6 +4,65 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Notes App</title>
+
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="scss/style.css" />
   </head>
-  <body></body>
+  <body>
+    <table id="notes-table" class="table">
+      <thead>
+        <h2 id="notes-table-header" class="table-header">Active Notes</h2>
+
+        <tr class="tr-content table-primary">
+          <th class="col-header">Time of Creation</th>
+          <th class="col-header">Note Content</th>
+          <th class="col-header">Note Category</th>
+          <th class="col-header">Dates Mentioned (DD/MM/YYYY)</th>
+          <th class="col-header">Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="btns-container">
+      <div class="col-6">
+        <form id="add-note-form" class="form-wrapper">
+          <input
+            type="text"
+            name="content"
+            placeholder="Note Content"
+            required
+          />
+          <select name="category" required>
+            <option value="">Select Category</option>
+            <option value="Task">Task</option>
+            <option value="Random Thought">Random Thought</option>
+            <option value="Idea">Idea</option>
+          </select>
+          <button type="submit" class="btn btn-primary">Add Note</button>
+        </form>
+      </div>
+      <div class="col-6">
+        <div class="btn-wrapper">
+          <button id="view-active-btn" class="btn btn-primary">
+            View Active Notes
+          </button>
+          <button id="view-archived-btn" class="btn btn-primary">
+            View Archived Notes
+          </button>
+          <button id="summary-button" class="btn btn-primary">
+            Show Summary
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="summary-container" style="display: none">
+      <table id="summary-table" class="table">
+        <h2 class="table-header">Summary</h2>
+      </table>
+    </div>
+
+    <script type="module" src="./js/app.js"></script>
+  </body>
 </html>

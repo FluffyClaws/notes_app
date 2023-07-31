@@ -1,0 +1,56 @@
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 15px;
+  width: auto;
+}
+
+.table-header,
+.col-header,
+.col-content {
+  text-align: center;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+th,
+td {
+  border-width: 1px;
+}
+
+.form-container,
+.note-container,
+.btns-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-wrapper {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-right: 10px;
+}
+
+.btn-form {
+  width: 320px;
+}
+
+input,
+select {
+  height: 40px;
+}
+input {
+  width: 520px;
+}
