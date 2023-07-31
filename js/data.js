@@ -5,7 +5,7 @@ const initialNotes = [
     createdAt: "2023-07-30T10:00:00",
     content:
       "I'm gonna have a dentist appointment on the 3/5/2021, I moved it from 5/5/2021",
-    category: "Task",
+    category: "Random Thought",
   },
   {
     id: 2,
@@ -19,21 +19,21 @@ const initialNotes = [
     createdAt: "2023-07-30T10:00:00",
     content:
       "I'm gonna have a dentist appointment on the 3/5/2021, I moved it from 5/5/2021",
-    category: "Task",
+    category: "Random Thought",
   },
   {
     id: 4,
     createdAt: "2023-07-30T10:00:00",
     content:
       "I'm gonna have a dentist appointment on the 3/5/2021, I moved it from 5/5/2021",
-    category: "Task",
+    category: "Idea",
   },
   {
     id: 5,
     createdAt: "2023-07-30T10:00:00",
     content:
       "I'm gonna have a dentist appointment on the 3/5/2021, I moved it from 5/5/2021",
-    category: "Task",
+    category: "Random Thought",
   },
   {
     id: 6,
@@ -47,9 +47,8 @@ const initialNotes = [
     createdAt: "2023-07-30T10:00:00",
     content:
       "I'm gonna have a dentist appointment on the 3/5/2021, I moved it from 5/5/2021",
-    category: "Task",
+    category: "Idea",
   },
-  // Add more initial notes here
 ];
 
 // Current notes and archived notes arrays

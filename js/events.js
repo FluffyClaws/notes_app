@@ -10,10 +10,25 @@ import {
 import { renderNotesTable, renderSummaryTable } from "./ui.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  let showActiveNotes = true; // Flag to keep track of which notes to show
-
   // Function to set up event listeners after the DOM is loaded
   function setUpEventListeners() {
+    const summaryButton = document.querySelector("#summary-button");
+
+    // Event listener for clicking the "Summary" button
+    summaryButton.addEventListener("click", () => {
+      const summaryContainer = document.querySelector("#summary-container");
+      const summaryTable = document.querySelector("#summary-table");
+
+      if (summaryContainer.style.display === "none") {
+        renderSummaryTable(activeNotes, archivedNotes);
+        summaryContainer.style.display = "block";
+        summaryButton.textContent = "Hide Summary";
+      } else {
+        summaryContainer.style.display = "none";
+        summaryButton.textContent = "Show Summary";
+      }
+    });
+
     // Event listener for adding a new note
     document
       .querySelector("#add-note-form")
@@ -69,14 +84,10 @@ document.addEventListener("DOMContentLoaded", () => {
           const id = Number(event.target.dataset.id);
           const noteToUnarchive = archivedNotes.find((note) => note.id === id);
           unarchiveNote(id, !noteToUnarchive.archived); // Toggle archived status
-          const archivedTasks = archivedNotes.filter(
-            (note) => note.category === "Task"
-          );
-          renderNotesTable(archivedTasks);
-          renderSummaryTable(activeNotes, archivedTasks);
+          renderNotesTable(archivedNotes, true); // Render all unarchived notes
+          renderSummaryTable(activeNotes, archivedNotes);
         }
       });
-
     // Event listener for removing a note
     document
       .querySelector("#notes-table")
@@ -93,11 +104,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document
       .querySelector("#view-archived-btn")
       .addEventListener("click", () => {
-        const archivedTasks = archivedNotes.filter(
-          (note) => note.category === "Task"
-        );
-        renderNotesTable(archivedTasks);
-        renderSummaryTable(activeNotes, archivedTasks);
+        renderNotesTable(archivedNotes); // Render all archived notes
+        renderSummaryTable(activeNotes, archivedNotes);
 
         // Update the header to "Archived Notes"
         document.querySelector("#notes-table-header").textContent =
@@ -106,7 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Event listener for viewing active notes
     document.querySelector("#view-active-btn").addEventListener("click", () => {
-      showActiveNotes = true;
       renderNotesTable(activeNotes, false);
       renderSummaryTable(activeNotes, archivedNotes);
 

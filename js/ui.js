@@ -23,7 +23,10 @@ export function renderNotesTable(notes) {
   if (notes.length === 0) {
     // If the notes array is empty, display the "No notes yet" message
     const noNotesRow = document.createElement("tr");
-    noNotesRow.innerHTML = `<td colspan="5">There are no notes yet</td>`;
+    noNotesRow.innerHTML = `
+      <td colspan="5" class="table-secondary">
+        <h2 class="col-content">There are no notes yet</h2>
+      </td>`;
     tableBody.appendChild(noNotesRow);
   } else {
     // If there are notes, render the table rows as before
@@ -33,20 +36,25 @@ export function renderNotesTable(notes) {
       const createdAtTime = formatTime(note.createdAt);
 
       row.innerHTML = `
-      <td>${createdAtDate} ${createdAtTime}</td>
-      <td>${note.content}</td>
-          <td>${note.category}</td>
-          <td>${getDatesFromNoteContent(note.content)}</td>
-          <td>
-            <button class="edit-btn" data-id="${note.id}">Edit</button>
-            ${
-              note.archived
-                ? `<button class="unarchive-btn" data-id="${note.id}">Restore</button>`
-                : `<button class="archive-btn" data-id="${note.id}">Archive</button>`
-            }
-            <button class="remove-btn" data-id="${note.id}">Remove</button>
-          </td>
-        `;
+        <td class="col-content table-secondary">${createdAtDate} ${createdAtTime}</td>
+        <td class="table-secondary">${note.content}</td>
+        <td class="col-content table-secondary">${note.category}</td>
+        <td class="col-content table-secondary">${getDatesFromNoteContent(
+          note.content
+        )}</td>
+        <td class="col-content table-secondary">
+          <button class="edit-btn btn btn-primary" data-id="${
+            note.id
+          }">Edit</button>
+          ${
+            note.archived
+              ? `<button class="unarchive-btn btn btn-primary" data-id="${note.id}">Restore</button>`
+              : `<button class="archive-btn btn btn-primary" data-id="${note.id}">Archive</button>`
+          }
+          <button class="remove-btn btn btn-primary" data-id="${
+            note.id
+          }">Remove</button>
+        </td>`;
       tableBody.appendChild(row);
     });
   }
@@ -56,51 +64,42 @@ export function renderNotesTable(notes) {
 export function renderSummaryTable(activeNotes, archivedNotes) {
   const summaryTable = document.querySelector("#summary-table");
 
-  if (activeNotes.length === 0) {
-    // If there are no active notes, render the summary table with archived notes only
-    if (archivedNotes.length === 0) {
-      // If there are no archived notes, display "There are no notes yet" message
-      summaryTable.innerHTML = `
-      <td colspan="3"><h2>Summary</h2></td>
-      <tr><td colspan="3">There are no notes yet</td></tr>`;
-    } else {
-      summaryTable.innerHTML = `
-          <tr>
-            <th>Category</th>
-            <th>Active Notes</th>
-            <th>Archived Notes</th>
-          </tr>
-          ${Object.entries(getNotesCountByCategory(archivedNotes))
-            .map(
-              ([category, count]) =>
-                `<tr><td>${category}</td><td>0</td><td>${count}</td></tr>`
-            )
-            .join("")}
-        `;
-    }
-  } else {
-    // Render the summary table with both active and archived notes
-    const allNotes = [...activeNotes, ...archivedNotes];
-    const activeNotesCounts = getNotesCountByCategory(activeNotes);
-    const archivedNotesCounts = getNotesCountByCategory(archivedNotes);
+  const allNotes = [...activeNotes, ...archivedNotes];
+  const allNotesCounts = getNotesCountByCategory(allNotes);
 
+  if (allNotes.length === 0) {
+    // If there are no notes, display "There are no notes yet" message
     summaryTable.innerHTML = `
-    <td colspan="3"><h2>Summary</h2></td>
-          <tr>
-            <th>Category</th>
-            <th>Active Notes</th>
-            <th>Archived Notes</th>
-          </tr>
+      <tr>
+        <td colspan="3" class="table-secondary">
+          <h2 class="col-content">There are no notes yet</h2>
+        </td>
+      </tr>`;
+  } else {
+    // Render the summary table with all categories and their note counts
+    summaryTable.innerHTML = `
+      <tr class="table-primary">
+        <th>Category</th>
+        <th>Active Notes</th>
+        <th>Archived Notes</th>
+      </tr>
 
-          ${Object.entries(activeNotesCounts)
-            .map(
-              ([category, count]) =>
-                `<tr><td>${category}</td><td>${count}</td><td>${
-                  archivedNotesCounts[category] || 0
-                }</td></tr>`
-            )
-            .join("")}
-        `;
+      ${Object.entries(allNotesCounts)
+        .map(
+          ([category, count]) => `
+            <tr class="table-secondary">
+              <td>${category}</td>
+              <td>${
+                activeNotes.filter((note) => note.category === category).length
+              }</td>
+              <td>${
+                archivedNotes.filter((note) => note.category === category)
+                  .length
+              }</td>
+            </tr>`
+        )
+        .join("")}
+    `;
   }
 }
 
